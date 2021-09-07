@@ -1,10 +1,25 @@
-﻿@{
+﻿@model List<Note>
+@{
     ViewData["Title"] = "Not Defteri";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Hoşgeldiniz</h1>
-    <p>NJotlarınızı oluşturup saklayabileceğiniz ve düzenleyebileceğiniz bu uygulamayı kullanmak için lütfen 
-        <a asp-area="Identity" asp-page="/Account/Register">kaydolun</a> ya da zaten üyeyseniz 
-        <a asp-area="Identity" asp-page="/Account/Login">giriş yapın</a>.</p>
-</div>
+<a asp-controller="Notlar" asp-action="Yeni" class="btn btn-primary">Yeni Not Ekleme</a>
+
+@if (Model.Count == 0)
+{
+    <p>Gösterilecek bir not bulunmuyor.</p>
+}
+else
+{
+    <ul>
+        @foreach (Note n in Model)
+        {
+            <li>
+                <strong>@n.Title</strong> <br />
+                @n.Content
+            </li>
+        }
+    </ul>
+}
+
+
