@@ -40,7 +40,9 @@ namespace NotDefteriMVC.Controllers
         public IActionResult Duzenle(int id)
         {
             NoteViewModel vm = new NoteViewModel();
-            Note note = db.Notes.Where(x => x.Id == id).First();
+            Note note = db.Notes.Where(x => x.Id == id).FirstOrDefault();
+            if (note.Equals(null))
+                return NotFound();
             if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 return Unauthorized();
             vm.NoteContent = note.Content;
@@ -53,7 +55,9 @@ namespace NotDefteriMVC.Controllers
         {
             if(ModelState.IsValid)
             {
-                Note note = db.Notes.Where(x => x.Id == vm.Id).First();
+                Note note = db.Notes.Where(x => x.Id == vm.Id).FirstOrDefault();
+                if (note.Equals(null))
+                    return NotFound();
                 if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
                     return Unauthorized();
                 note.Title = vm.NoteTitle;
