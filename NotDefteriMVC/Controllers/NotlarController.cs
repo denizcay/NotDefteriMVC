@@ -39,7 +39,13 @@ namespace NotDefteriMVC.Controllers
         }
         public IActionResult Duzenle(int id)
         {
-            return View(new NoteViewModel());
+            NoteViewModel vm = new NoteViewModel();
+            Note note = db.Notes.Where(x => x.Id == id).First();
+            if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                return Unauthorized();
+            vm.NoteContent = note.Content;
+            vm.NoteTitle = note.Title;
+            return View(vm);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
