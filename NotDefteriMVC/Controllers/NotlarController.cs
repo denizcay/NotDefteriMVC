@@ -72,6 +72,10 @@ namespace NotDefteriMVC.Controllers
         public IActionResult Sil(int id)
         {
             Note note = db.Notes.Where(x => x.Id == id).FirstOrDefault();
+            if (note==null)
+                return NotFound();
+            if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                return Unauthorized();
             db.Remove(note);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
