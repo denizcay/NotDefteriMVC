@@ -25,10 +25,13 @@ namespace NotDefteriMVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Yeni(Note note)
+        public IActionResult Yeni(NewNoteViewModel vm)
         {
             if (ModelState.IsValid)
             {
+                Note note = new Note();
+                note.Title = vm.Title;
+                note.Content = vm.Content;
                 note.AuthorId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 db.Notes.Add(note);
                 db.SaveChanges();
@@ -58,7 +61,7 @@ namespace NotDefteriMVC.Controllers
                     return NotFound();
                 note.Title = vm.NoteTitle;
                 note.Content = vm.NoteContent;
-                db.Update(note);
+                db.Update(note); // bunu zaten savechanges ile yapıyor
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
@@ -88,5 +91,19 @@ namespace NotDefteriMVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
+
+        /* AJAX Yöntemi ile yapılırken:
+         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Sil(NoteViewModel vm)
+        {
+            Note note = db.Notes.Where(x => x.Id == vm.Id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+            if (note == null)
+                return NotFound();
+            db.Remove(note);
+            db.SaveChanges();
+            return Ok();
+        }         
+         */
     }
 }
