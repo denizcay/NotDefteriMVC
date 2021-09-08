@@ -40,8 +40,8 @@ namespace NotDefteriMVC.Controllers
         public IActionResult Duzenle(int id)
         {
             NoteViewModel vm = new NoteViewModel();
-            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
-            if (note.Equals(null))
+            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+            if (note == null)
                 return NotFound();
             vm.NoteContent = note.Content;
             vm.NoteTitle = note.Title;
@@ -53,8 +53,8 @@ namespace NotDefteriMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Note note = db.Notes.Where(x => x.Id == vm.Id && x.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
-                if (note.Equals(null))
+                Note note = db.Notes.Where(x => x.Id == vm.Id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+                if (note == null)
                     return NotFound();
                 note.Title = vm.NoteTitle;
                 note.Content = vm.NoteContent;
@@ -67,7 +67,7 @@ namespace NotDefteriMVC.Controllers
 
         public IActionResult Sil(int id)
         {
-            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
             if (note == null)
                 return NotFound();
 
