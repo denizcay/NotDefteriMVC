@@ -15,7 +15,8 @@ else
         @foreach (Note n in Model)
         {
             <li>
-                <strong>@n.Title</strong> <br />
+                <strong>@n.Title</strong> <a asp-controller="Notlar" asp-action="Duzenle" asp-route-id="@n.Id">Düzenle</a> <a asp-controller="Notlar" asp-action="Sil" asp-route-id="@n.Id">Sil</a> 
+                <br />
                 @n.Content
             </li>
         }

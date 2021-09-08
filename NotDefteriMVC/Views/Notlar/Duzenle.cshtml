@@ -1,0 +1,24 @@
+﻿@model NoteViewModel
+@{
+    ViewData["Title"] = "Düzenleme";
+}
+
+<div class="alert alert-info" asp-validation-summary="ModelOnly"></div>
+
+<a asp-controller="Home" asp-action="Index">Notlara geri dön.</a>
+
+<form class="form-control" method="post" asp-controller="Notlar" asp-action="Duzenle">
+    <div>
+        <input type="hidden" asp-for="Id" />
+        <label asp-for="NoteTitle" class="form-label">Title</label>
+        <input asp-for="NoteTitle" class="form-control" />
+        <span asp-validation-for="NoteTitle"></span>
+    </div>
+    <div>
+        <label asp-for="NoteContent" class="form-label">Content</label>
+        <input asp-for="NoteContent" class="form-control" />
+        <span asp-validation-for="NoteContent"></span>
+    </div>
+    <button class="btn btn-primary">SAVE</button>
+
+</form>
