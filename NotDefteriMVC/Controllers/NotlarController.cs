@@ -70,7 +70,20 @@ namespace NotDefteriMVC.Controllers
             Note note = db.Notes.Where(x => x.Id == id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
             if (note == null)
                 return NotFound();
-
+            NoteViewModel vm = new NoteViewModel();
+            vm.NoteContent = note.Content;
+            vm.NoteTitle = note.Title;
+            return View(vm);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Sil(NoteViewModel vm)
+        {
+            Note note = db.Notes.Where(x => x.Id == vm.Id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+            if (note == null)
+                return NotFound();
+            note.Title = vm.NoteTitle;
+            note.Content = vm.NoteContent;
             db.Remove(note);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");

@@ -1,0 +1,17 @@
+﻿@model NoteViewModel
+@{
+    ViewData["Title"] = "Silme";
+}
+
+<div class="alert alert-info" asp-validation-summary="ModelOnly"></div>
+
+<a class="mt-5" asp-controller="Home" asp-action="Index">Notlara geri dön.</a>
+<form method="post" class="form-control" asp-controller="Notlar" asp-action="Sil">
+    <div>
+        <input type="hidden" asp-for="Id" />
+        <p>@Model.NoteTitle adlı notu silmek istediğinize emin misiniz?</p>
+    </div>
+    <button class="btn btn-primary">EVET, SİL</button>
+</form>
+
+
