@@ -40,11 +40,9 @@ namespace NotDefteriMVC.Controllers
         public IActionResult Duzenle(int id)
         {
             NoteViewModel vm = new NoteViewModel();
-            Note note = db.Notes.Where(x => x.Id == id).FirstOrDefault();
+            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
             if (note.Equals(null))
                 return NotFound();
-            if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                return Unauthorized();
             vm.NoteContent = note.Content;
             vm.NoteTitle = note.Title;
             return View(vm);
@@ -53,13 +51,11 @@ namespace NotDefteriMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Duzenle(NoteViewModel vm)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                Note note = db.Notes.Where(x => x.Id == vm.Id).FirstOrDefault();
+                Note note = db.Notes.Where(x => x.Id == vm.Id && x.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
                 if (note.Equals(null))
                     return NotFound();
-                if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                    return Unauthorized();
                 note.Title = vm.NoteTitle;
                 note.Content = vm.NoteContent;
                 db.Update(note);
@@ -71,11 +67,10 @@ namespace NotDefteriMVC.Controllers
 
         public IActionResult Sil(int id)
         {
-            Note note = db.Notes.Where(x => x.Id == id).FirstOrDefault();
-            if (note==null)
+            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+            if (note == null)
                 return NotFound();
-            if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                return Unauthorized();
+
             db.Remove(note);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
