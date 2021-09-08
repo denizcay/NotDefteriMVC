@@ -48,6 +48,8 @@ namespace NotDefteriMVC.Controllers
             if(ModelState.IsValid)
             {
                 Note note = db.Notes.Where(x => x.Id == vm.Id).First();
+                if (note.AuthorId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                    return Unauthorized();
                 note.Title = vm.NoteTitle;
                 note.Content = vm.NoteContent;
                 db.Update(note);
