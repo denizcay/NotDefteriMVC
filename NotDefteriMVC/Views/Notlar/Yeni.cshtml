@@ -1,5 +1,11 @@
-﻿@model Note
+﻿@model NewNoteViewModel
+@{ 
+    ViewData["Title"] = "Yeni Not Ekleme";
+}
 
+<div asp-validation-summary="All"></div>
+
+<h1>Yeni Not</h1>
 <form method="post">
     <div class="form-group">
         <label asp-for="Title"></label>
@@ -12,5 +18,6 @@
         <span asp-validation-for="Content" class="text-danger"></span>
     </div>
     <button class="btn btn-primary">EKLE</button>
+    <a class="btn btn-danger" asp-controller="Home" asp-action="Index">İptal</a>
 
 </form>

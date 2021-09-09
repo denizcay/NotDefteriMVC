@@ -7,17 +7,17 @@
 
 <a asp-controller="Home" asp-action="Index">Notlara geri dön.</a>
 
-<form class="form-control" method="post" asp-controller="Notlar" asp-action="Duzenle">
+<form  method="post" asp-controller="Notlar" asp-action="Duzenle">
     <div>
         <input type="hidden" asp-for="Id" />
-        <label asp-for="NoteTitle" class="form-label">Title</label>
+        <label asp-for="NoteTitle">Title</label>
         <input asp-for="NoteTitle" class="form-control" />
-        <span asp-validation-for="NoteTitle"></span>
+        <span asp-validation-for="NoteTitle" class="text-danger"></span>
     </div>
     <div>
-        <label asp-for="NoteContent" class="form-label">Content</label>
+        <label asp-for="NoteContent" >Content</label>
         <input asp-for="NoteContent" class="form-control" />
-        <span asp-validation-for="NoteContent"></span>
+        <span asp-validation-for="NoteContent" class="text-danger"></span>
     </div>
     <button class="btn btn-primary">SAVE</button>
 

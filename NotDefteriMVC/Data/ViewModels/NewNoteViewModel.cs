@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotDefteriMVC.Data
+namespace NotDefteriMVC.Data.ViewModels
 {
-    public class Note
+    public class NewNoteViewModel
     {
-        public int Id { get; set; }
 
         [Required, MaxLength(100)]
         public string Title { get; set; }
         public string Content { get; set; }
-
-        [Required, ForeignKey("Author")]
-        public string AuthorId { get; set; }
-        public ApplicationUser Author { get; set; }
     }
 }
