@@ -1,0 +1,37 @@
+﻿@model ProfilResmiViewModel
+@{
+    ViewData["Title"] = "Profil Resmi";
+}
+<h1>Profil Resmi</h1>
+
+@if (Model.Yuklendi)
+{
+    <div class="alert alert-success">
+        Seçtiğiniz resim başarıyla yüklendi.
+    </div>
+}
+
+<div class="d-flex">
+
+    <div class="text-center">
+        @if (string.IsNullOrEmpty(Model.Foto))
+        {
+            <img src="~/img/user.png" width="200" height="200" alt="no avatar" /><br />
+        }
+        else
+        {
+            <img src="~/upload/@Model.Foto" width="200" height="200" alt="no avatar" /><br />
+            <span>(<a href="#">Resmi Kaldır</a>)</span>
+
+        }
+    </div>
+
+    <form method="post" class="p-5" enctype="multipart/form-data">
+        <label for="photo">Resim:</label><br />
+        <input type="file" name="photo" id="photo" /><br />
+        <button class="btn btn-primary mt-3">KAYDET</button>
+        <div class="text-danger">
+            @Html.ValidationMessage("photo")
+        </div>
+    </form>
+</div>
