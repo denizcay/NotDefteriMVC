@@ -12,26 +12,25 @@
 }
 
 <div class="d-flex">
-
     <div class="text-center">
-        @if (string.IsNullOrEmpty(Model.Foto))
+        <vc:profil-resmi genislik="200" yukseklik="200" sinif="" />
+        @if (!string.IsNullOrEmpty(Model.Foto))
         {
-            <img src="~/img/user.png" width="200" height="200" alt="no avatar" /><br />
+        <form asp-controller="ProfilResmi" asp-action="ResmiKaldir" method="post">
+            <button class="btn btn-link">Resmi Kaldır</button>
+        </form>
         }
-        else
-        {
-            <img src="~/upload/@Model.Foto" width="200" height="200" alt="no avatar" /><br />
-            <span>(<a href="#">Resmi Kaldır</a>)</span>
-
-        }
+    
     </div>
 
     <form method="post" class="p-5" enctype="multipart/form-data">
         <label for="photo">Resim:</label><br />
-        <input type="file" name="photo" id="photo" /><br />
+        <input type="file" accept="image/*" name="photo" id="photo" /><br />
         <button class="btn btn-primary mt-3">KAYDET</button>
         <div class="text-danger">
             @Html.ValidationMessage("photo")
         </div>
+
+    
     </form>
 </div>
