@@ -12,17 +12,21 @@ namespace NotDefteriMVC.Services
     {
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            string gonderen = "mail@rasceta.net";
+            MailAddress gonderen = new MailAddress("mail@rasceta.net", "Deniz Çay");
+            MailAddress to = new MailAddress(email);
 
-            MailMessage posta = new MailMessage(gonderen, email, subject, htmlMessage);
+            MailMessage posta = new MailMessage(gonderen, to);
+            posta.Subject = subject;
+            posta.Body = htmlMessage;
             posta.IsBodyHtml = true;
 
             using (SmtpClient smtp = new SmtpClient("rasceta.net", 587))
             {
-                smtp.Credentials = new NetworkCredential("mail@rasceta.net", "Password");
+                smtp.Credentials = new NetworkCredential("mail@rasceta.net", "password");
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(posta);
             }
         }
+
     }
 }
